@@ -10,3 +10,4 @@ storage/
 alembic.ini
 *.egg-info/
 node_modules/
+/uploads
