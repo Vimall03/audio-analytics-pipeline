@@ -9,3 +9,4 @@ celery
 deepgram-sdk
 transformers
 torch
+gtts

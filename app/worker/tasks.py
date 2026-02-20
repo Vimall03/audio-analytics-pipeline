@@ -104,5 +104,5 @@ def process_audio(self, file_path, call_id):
         raise self.retry(exc=exc, countdown=30)
     finally:
         db.close()
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        # if os.path.exists(file_path):
+        #     os.remove(file_path)
