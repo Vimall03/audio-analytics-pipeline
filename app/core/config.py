@@ -7,6 +7,7 @@ class Settings(BaseSettings):
 	UPLOAD_DIR: str = "uploads"
 	CELERY_BROKER_URL: str = ""
 	CELERY_RESULT_BACKEND: str = ""
+	DEEPGRAM_API_KEY: str = ""
 
 	class Config:
 		env_file = ".env"
