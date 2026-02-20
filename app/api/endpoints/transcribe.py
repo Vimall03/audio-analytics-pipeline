@@ -5,6 +5,8 @@ import uuid, shutil
 from pathlib import Path
 from app.core.config import settings
 from app.db.models import Call
+from app.worker.tasks import process_audio
+
 
 UPLOAD_DIR = Path(settings.UPLOAD_DIR)
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -38,9 +40,12 @@ async def transcribe_audio(
     db.commit()
     
     # CELERY CALL HERE
+    task = process_audio.apply_async(args=[str(file_path)])
+
 
     return {
         "call_id": str(call_id),
+        "task_id": task.id,
         "status": "processing",
         "message": "Audio upload successful. Transcription is running in the background."
     }
