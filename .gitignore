@@ -1,0 +1,12 @@
+.pyc
+__pycache__/
+.env
+.env.*
+.DS_Store
+storage/
+.vscode/
+*.log
+*.sqlite3
+alembic.ini
+*.egg-info/
+node_modules/
