@@ -6,4 +6,5 @@
 4. create schemas and create tables
 5. install the db and db admin (UI for better DX)
 6. Setup Redis + Celery for async processess
-7. Complete stt pipeline
+7. Complete stt pipeline & COmplete coachservice 
+8. need to update versions in the requirement.txt 

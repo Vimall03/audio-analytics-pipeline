@@ -6,3 +6,6 @@ pydantic-settings
 python-multipart
 redis
 celery
+deepgram-sdk
+transformers
+torch

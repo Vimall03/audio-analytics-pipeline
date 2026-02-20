@@ -14,8 +14,40 @@ def process_audio(self, file_path, call_id):
         
         print(f"Starting transcription for Call {call_id} at {file_path}")
 
+
+        # For testing: use a hardcoded Deepgram-like response instead of calling the API
         response = STTService().transcribe_audio(file_path)
-        print(f"Deepgram Response for Call {call_id}: {response}")
+
+        """
+          Used the below code for testing the rest of the pipeline without making actual API calls to Deepgram
+        """
+        # from types import SimpleNamespace
+        # response = SimpleNamespace(
+        #     results=SimpleNamespace(
+        #         channels=[
+        #             SimpleNamespace(
+        #                 alternatives=[
+        #                     SimpleNamespace(
+        #                         transcript='The stale smell of old beer lingers. It takes heat to bring out the odor. A cold dip restores health and zest. A salt pickle tastes fine with ham. Tacos al pastor are my favorite. A zestful food is the hot cross bun.',
+        #                         confidence=0.9992107,
+        #                         words=[],
+        #                         paragraphs=None,
+        #                         summaries=None,
+        #                         topics=None
+        #                     )
+        #                 ],
+        #                 detected_language=None
+        #             )
+        #         ],
+        #         utterances=[
+        #             SimpleNamespace(transcript='The stale smell of old beer lingers.', speaker=0, start=1.12, end=3.62),
+        #             SimpleNamespace(transcript='It takes heat to bring out the odor.', speaker=0, start=4.32, end=6.42),
+        #             SimpleNamespace(transcript='A cold dip restores health and zest.', speaker=0, start=6.88, end=9.46),
+        #             SimpleNamespace(transcript='A salt pickle tastes fine with ham. Tacos al pastor are my favorite.', speaker=0, start=9.92, end=14.55),
+        #             SimpleNamespace(transcript='A zestful food is the hot cross bun.', speaker=0, start=15.01, end=17.67)
+        #         ]
+        #     )
+        # )
 
         results = response.results
         channels = results.channels
@@ -33,17 +65,16 @@ def process_audio(self, file_path, call_id):
         print(utterances)
 
         segments_to_add = []
-        # 3. Process each segment individually
+
         for utt in utterances:
             text = utt.transcript
             speaker = f"Speaker {utt.speaker}"
             start = utt.start
             end = utt.end
 
-            # Temporary assignmet for sentiment and coachability
-            # Ideally will be calling the CoachService ()
-            sentiment = "neutral"
-            is_coachable = False
+            
+            sentiment = CoachService().analyze_sentiment(text)
+            is_coachable = CoachService().is_coachable(text, sentiment, speaker)
 
             segments_to_add.append(
                 TranscriptSegment(
@@ -57,10 +88,10 @@ def process_audio(self, file_path, call_id):
                 )
             )
 
-        # 4. Bulk Insert for Efficiency
+        # Bulk Insert for Efficiency
         db.add_all(segments_to_add)
 
-        # 5. Update in the status  db
+        # Update in the status  db
         call_record.status = "completed"
         db.commit()
 
