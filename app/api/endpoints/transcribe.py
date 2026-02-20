@@ -40,7 +40,7 @@ async def transcribe_audio(
     db.commit()
     
     # CELERY CALL HERE
-    task = process_audio.apply_async(args=[str(file_path)])
+    task = process_audio.apply_async(args=[str(file_path), str(call_id)])
 
 
     return {
