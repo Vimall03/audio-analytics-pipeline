@@ -22,7 +22,9 @@
             {
               "key": "file",
               "type": "file",
-              "src": "postman-cloud:///1f10e83a-55f8-4000-8628-f04b43718f44"
+              "src": [
+                "postman-cloud:///1f10e83a-55f8-4000-8628-f04b43718f44"
+              ]
             }
           ]
         },
@@ -90,15 +92,6 @@
             "value": "application/json"
           }
         ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"text\": \"Hello, this is a test.\"}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
         "url": {
           "raw": "http://localhost:8000/integration/coachable-moments/",
           "protocol": "http",
@@ -126,12 +119,8 @@
             "value": "application/json"
           }
         ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"text\": \"Hello, this is a test.\"}"
-        },
         "url": {
-          "raw": "http://localhost:8000/replay",
+          "raw": "http://localhost:8000/replay?id=6",
           "protocol": "http",
           "host": [
             "localhost"
@@ -139,6 +128,13 @@
           "port": "8000",
           "path": [
             "replay"
+          ],
+          "query": [
+            {
+              "key": "id",
+              "value": "6",
+              "uuid": "9da198c7-8224-41a3-aed5-8b0efbfcfa7a"
+            }
           ]
         }
       },
@@ -158,10 +154,6 @@
             "value": "application/json"
           }
         ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"text\": \"Hello, this is a test.\"}"
-        },
         "url": {
           "raw": "http://localhost:8000/integration/calls",
           "protocol": "http",
@@ -191,10 +183,6 @@
             "value": "application/json"
           }
         ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\"text\": \"Hello, this is a test.\"}"
-        },
         "url": {
           "raw": "http://localhost:8000/integration/transcript-segments?call_id=809a613b-3a6c-4b85-a7ad-597f44b65dd6",
           "protocol": "http",
@@ -209,7 +197,8 @@
           "query": [
             {
               "key": "call_id",
-              "value": "809a613b-3a6c-4b85-a7ad-597f44b65dd6"
+              "value": "809a613b-3a6c-4b85-a7ad-597f44b65dd6",
+              "uuid": "e0788f12-50cf-49b0-8c08-5fb784f93458"
             }
           ]
         }
