@@ -3,6 +3,8 @@ from app.db.session import get_db
 from app.db.models import TranscriptSegment
 from app.services.tts_service import TTSService
 from sqlalchemy.orm import Session
+from fastapi.responses import FileResponse
+import datetime
 
 router = APIRouter()
 
@@ -12,5 +14,6 @@ async def replay_audio(id: str = Query(..., description="transcript_segments id 
     if not transcript_segment:
         raise HTTPException(status_code=404, detail="No transcript segment found for id={id}")
 
-    result = TTSService().generate_speech(transcript_segment.text, f"replay_{id}")
-    return {"file_path": f"{result}"}
+    file_name = f"replay_{id}_{datetime.now().strftime('%Y%m%d%H%M%S')}.mp3"
+    file_path = TTSService().generate_speech(transcript_segment.text, file_name)
+    return FileResponse(file_path, media_type="audio/mpeg", filename=file_name)
