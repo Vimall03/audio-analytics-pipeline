@@ -6,7 +6,7 @@ from app.db.session import SessionLocal
 from app.db.models import Call, TranscriptSegment
 from app.core.logger import logger
 
-@celery.task(bind=True, name="process_audio_task", max_retries=0) # Set to 0 for DX, Will be adjusted for production.
+@celery.task(bind=True, name="process_audio_task", max_retries=3) # Set to 0 for DX, Will be adjusted for production.
 def process_audio(self, file_path, call_id):
 
     db = SessionLocal()
