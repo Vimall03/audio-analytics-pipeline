@@ -2,7 +2,7 @@ import os
 from gtts import gTTS
 from pathlib import Path
 from app.core.config import settings
-
+from app.core.logger import logger
 class TTSService:
     def __init__(self):
         self.output_dir = Path(settings.UPLOAD_DIR) / "tts_outputs" # save in tts folder for better organzation
@@ -22,5 +22,5 @@ class TTSService:
             tts.save(str(file_path))
             return str(file_path)
         except Exception as e:
-            print(f"TTS Generation Error: {e}")
+            logger.error(f"TTS Generation Error: {e}")
             raise e

@@ -4,6 +4,7 @@ from app.services.stt_service import STTService
 from app.services.coach_service import CoachService
 from app.db.session import SessionLocal
 from app.db.models import Call, TranscriptSegment
+from app.core.logger import logger
 
 @celery.task(bind=True, name="process_audio_task", max_retries=0) # Set to 0 for DX, Will be adjusted for production.
 def process_audio(self, file_path, call_id):
@@ -12,7 +13,7 @@ def process_audio(self, file_path, call_id):
     try:
         call_record = db.query(Call).filter(Call.id == call_id).first()
         
-        print(f"Starting transcription for Call {call_id} at {file_path}")
+        logger.info(f"Starting transcription for Call {call_id} at {file_path}")
 
 
         # For testing: use a hardcoded Deepgram-like response instead of calling the API
@@ -99,7 +100,7 @@ def process_audio(self, file_path, call_id):
 
     except Exception as exc:
         db.rollback()
-        print(f"Error processing call {call_id}: {exc}")
+        logger.info(f"Error processing call {call_id}: {exc}")
         # Retry logic for transient errors (CELERY LEVEL)
         raise self.retry(exc=exc, countdown=30)
     finally:

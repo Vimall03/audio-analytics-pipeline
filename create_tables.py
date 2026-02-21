@@ -1,11 +1,12 @@
 from app.db.base import Base
 from app.db.session import engine
-import app.db.models 
+import app.db.models
+from app.core.logger import logger
 
 def main():
-    print("Creating all tables...")
+    logger.info("Creating all tables...")
     Base.metadata.create_all(bind=engine)
-    print("Done!!")
+    logger.info("Done!!")
 
 if __name__ == "__main__":
     main()

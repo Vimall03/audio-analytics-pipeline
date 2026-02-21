@@ -1,5 +1,5 @@
-import logging
 from transformers import pipeline
+from app.core.logger import logger
 
 class CoachService:
     def __init__(self):
@@ -9,10 +9,10 @@ class CoachService:
             self.sentiment_model = pipeline(
                 "sentiment-analysis",
                 model="cardiffnlp/twitter-roberta-base-sentiment-latest",
-                device=-1 # Using -1 for cpu
+                device=-1
             )
         except Exception as e:
-            logging.error(f"Failed to load sentiment model: {e}")
+            logger.error(f"Failed to load sentiment model: {e}")
             self.sentiment_model = None
 
         # I have used keywords to detect objections for simplicity. In a production system, 
@@ -25,13 +25,14 @@ class CoachService:
         }
 
     def analyze_sentiment(self, text: str) -> str:
-        """Returns the sentiment label: positive, neutral, or negative."""
         if not self.sentiment_model:
             return "neutral"
-        
-        # truncating text to 512 tokens to stay with in modle limits
-        result = self.sentiment_model(text[:512])[0]
-        return result['label'].lower()
+        try:
+            result = self.sentiment_model(text[:512])[0]
+            return result['label'].lower()
+        except Exception as e:
+            logger.error(f"Sentiment analysis failed: {e}")
+            return "neutral"
 
     def is_coachable(self, text: str, sentiment: str, speaker: str) -> bool:
         """
