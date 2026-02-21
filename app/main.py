@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.endpoints import transcribe, speak, replay
+from app.api.endpoints import integration, transcribe, speak, replay
 
 app = FastAPI (
   title="Audio Analytics Pipeline API",
@@ -20,6 +20,7 @@ app.add_middleware(
 app.include_router(transcribe.router, prefix="/transcribe", tags=["Transcription"])
 app.include_router(speak.router, prefix="/speak", tags=["Text-to-Speech"])  
 app.include_router(replay.router, prefix="/replay", tags=["Replay"])
+app.include_router(integration.router, prefix="/integration", tags=["Integration"])
 
 @app.get("/")
 def root():
