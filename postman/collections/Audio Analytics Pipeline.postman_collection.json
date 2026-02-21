@@ -1,0 +1,220 @@
+{
+  "info": {
+    "_postman_id": "af286aa1-fab5-4e0a-93ce-4321ffdfcec7",
+    "name": "Audio Analytics Pipeline",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Transcribe",
+      "id": "83c4fb45-6fd2-49e0-9977-c4ef37684eac",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "postman-cloud:///1f10e83a-55f8-4000-8628-f04b43718f44"
+            }
+          ]
+        },
+        "url": {
+          "raw": "http://localhost:8000/transcribe/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "transcribe",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Speak",
+      "id": "e772ee69-2a77-496d-88b6-51c8c348d10d",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"Hello, this is a test.\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/speak/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "speak",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Coachable Moments",
+      "id": "5da01ead-6a83-440b-aed9-6bef209d5b57",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"Hello, this is a test.\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8000/integration/coachable-moments/",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "integration",
+            "coachable-moments",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Replay",
+      "id": "71275943-aae3-4a2f-816a-fab5d7f4c4b4",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"Hello, this is a test.\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/replay",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "replay"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Calls",
+      "id": "927f2676-6106-4ad7-96ac-b94356c25ebb",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"Hello, this is a test.\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/integration/calls",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "integration",
+            "calls"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Transcript Segments",
+      "id": "dcdbc326-42f2-4e06-af9c-1feec829575b",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\": \"Hello, this is a test.\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/integration/transcript-segments?call_id=809a613b-3a6c-4b85-a7ad-597f44b65dd6",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "integration",
+            "transcript-segments"
+          ],
+          "query": [
+            {
+              "key": "call_id",
+              "value": "809a613b-3a6c-4b85-a7ad-597f44b65dd6"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
